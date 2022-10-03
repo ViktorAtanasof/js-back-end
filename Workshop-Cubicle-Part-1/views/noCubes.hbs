@@ -1,0 +1,31 @@
+<main>
+  <form method="get">
+    <input type="text" class="search" name="search" placeholder="Search..." />
+    <input
+      type="number"
+      name="fromLevel"
+      min="1"
+      max="1000"
+      class="difficulty"
+      value="{{fromLevel}}"
+      placeholder="Difficulty from..."
+    />
+    <span>-</span>
+    <input
+      type="number"
+      name="toLevel"
+      min="1"
+      max="1000"
+      class="difficulty"
+      value="{{toLevel}}"
+      placeholder="Difficulty to..."
+    />
+    <input type="submit" value="search" />
+  </form>
+  <img
+    id="sadFaceImg"
+    src="https://www.iconpacks.net/icons/2/free-sad-face-icon-2691-thumb.png"
+    alt="sad face"
+  />
+  <h1>No cubes available</h1>
+</main>
