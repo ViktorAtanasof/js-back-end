@@ -1,31 +1,20 @@
 //const env = process.env.NODE_ENV || 'development';
 //const config = require('./config/config')[env];
 const express = require('express');
-const hbs = require('express-handlebars').create({
-    extname: '.hbs'
-});
-
-const homeController = require('./controllers/homeController');
-const defaultController = require('./controllers/defaultController');
-const detailsController = require('./controllers/detailsController');
-const createController = require('./controllers/createController');
-
-const app = express();
+const expressConfig = require('./config/express');
+const routesConfig = require('./config/routes');
 //const bodyParser = require('body-parser');
-
-app.engine('.hbs', hbs.engine);
-app.set('view engine', '.hbs');
-
-app.use(express.urlencoded({ extended: true }));
-app.use('/static', express.static('static'));
 
 /* require('./config/routes')(app);
 require('./config/express')(app); */
 
-app.use(homeController);
-app.use('/details', detailsController);
-app.use('/create', createController);
+async function start() {
+    const app = express();
 
-app.use(defaultController);
+    expressConfig(app);
+    routesConfig(app);
 
-app.listen(3000, () => console.log(`Listening on port 3000!`));
+    app.listen(3000, () => console.log(`Listening on port 3000!`));
+}
+
+start();
