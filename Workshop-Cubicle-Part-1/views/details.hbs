@@ -9,4 +9,14 @@
       <a class="btn" href="/attach/accessory/{{_id}}">Attach Acessory</a>
     </div>
     {{/with}}
+    <h2>Accessories</h2>
+      <div class="accessories">
+    
+      {{#each cube.accessories}}
+      {{> accessory}}
+      {{else}}
+      <h3 class="italic">This cube has no accessories yet...</h3>
+      {{/each}}
+
+  </div>
 </main>
