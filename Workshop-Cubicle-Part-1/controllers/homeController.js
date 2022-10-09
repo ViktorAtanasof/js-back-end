@@ -1,8 +1,8 @@
 const { getAll } = require('../services/cubeService');
 
-const router = require('express').Router();
+const homeController = require('express').Router();
 
-router.get('/',  async (req, res) => {
+homeController.get('/',  async (req, res) => {
     const search = req.query.search || '';
     const fromLevel = Number(req.query.fromLevel) || 1;
     const toLevel = Number(req.query.toLevel) || 1000;
@@ -24,10 +24,10 @@ router.get('/',  async (req, res) => {
     }
 });
 
-router.get('/about', (req, res) => {
+homeController.get('/about', (req, res) => {
     res.render('about', {
         title: 'About Page'
     });
 });
 
-module.exports = router;
+module.exports = homeController;

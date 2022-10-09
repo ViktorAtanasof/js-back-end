@@ -1,8 +1,8 @@
 const { getById } = require('../services/cubeService');
 
-const router = require('express').Router();
+const detailsController = require('express').Router();
 
-router.get('/:id', async (req, res) => {
+detailsController.get('/:id', async (req, res) => {
     const cubeId = req.params.id;
     const cube = await getById(cubeId);
     if (cube) {
@@ -18,4 +18,4 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = detailsController;

@@ -1,14 +1,14 @@
 const { create } = require('../services/cubeService');
 
-const router = require('express').Router();
+const createController = require('express').Router();
 
-router.get('/', (req, res) => {
+createController.get('/', (req, res) => {
     res.render('create', {
         title: 'Create Page'
     });
 });
 
-router.post('/', async (req, res) => {
+createController.post('/', async (req, res) => {
     try {
         //throw new Error('Validation failed');
         const result = await create(req.body);
@@ -21,4 +21,4 @@ router.post('/', async (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = createController;
