@@ -4,6 +4,7 @@ const hbs = require('express-handlebars').create({
 });
 const cookieParser = require('cookie-parser');
 const auth = require('../middlewares/auth');
+const userNav = require('../middlewares/userNav');
 
 const jwtSecret = 'abc';
 
@@ -15,4 +16,5 @@ module.exports = (app) => {
     app.use('/static', express.static('static'));
     app.use(cookieParser());
     app.use(auth(jwtSecret));
+    app.use(userNav());
 }
