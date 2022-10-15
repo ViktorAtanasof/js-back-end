@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const connection = 'mongodb://localhost:27017/scaffold';
+const connection = 'mongodb://localhost:27017/booking-uni';
 
 module.exports = async (app) => {
     try {
