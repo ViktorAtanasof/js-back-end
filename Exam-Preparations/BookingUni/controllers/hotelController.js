@@ -1,11 +1,20 @@
-const { create } = require('../services/hotelService');
+const { create, getById, edit, deleteById, bookRoom } = require('../services/hotelService');
 const { parseError } = require('../util/parser');
 
 const hotelController = require('express').Router();
 
-hotelController.get('/:id/details', (req, res) => {
+hotelController.get('/:id/details', async (req, res) => {
+    const hotel = await getById(req.params.id);
+
+    if(hotel.owner == req.user._id) {
+        hotel.isOwner = true;
+    } else if(hotel.bookings.map(b => b.toString()).includes(req.user._id.toString())) {
+        hotel.isBooked = true;
+    }
+
     res.render('details', {
-        title: 'Details Page'
+        title: 'Details Page',
+        hotel
     });
 });
 
@@ -39,10 +48,81 @@ hotelController.post('/create', async (req, res) => {
     }
 });
 
-hotelController.get('/:id/edit', (req, res) => {
+hotelController.get('/:id/edit', async (req, res) => {
+    const hotel = await getById(req.params.id);
+
+    if(hotel.owner != req.user._id) {
+        return res.redirect('/login');
+    };
+
     res.render('edit', {
-        title: 'Edit Page'
+        title: 'Edit Page',
+        hotel
     });
+});
+
+hotelController.post('/:id/edit', async (req, res) => {
+    const hotel = await getById(req.params.id);
+
+    if(hotel.owner != req.user._id) {
+        return res.redirect('/login');
+    };
+
+    const edited = {
+        name: req.body.name,
+        city: req.body.city,
+        imageUrl: req.body.imageUrl,
+        rooms: Number(req.body.rooms)
+    };
+
+    try {
+        if(Object.values(edited).some(v => !v)) {
+            throw new Error('All fields are required');
+        }
+        await edit(req.params.id, edited);
+        res.redirect(`/${req.params.id}/details`);
+    } catch (err) {
+        res.render('edit', {
+            title: 'Edit Page',
+            hotel: Object.assign(edited, { _id: req.params.id }),
+            errors: parseError(err)
+        });
+    }
+});
+
+hotelController.get('/:id/delete', async (req, res) => {
+    const hotel = await getById(req.params.id);
+
+    if(hotel.owner != req.user._id) {
+        return res.redirect('/login');
+    };
+
+    await deleteById(req.params.id);
+    res.redirect('/');
+});
+
+hotelController.get('/:id/book', async (req, res) => {
+    const hotel = await getById(req.params.id);
+
+    try {
+        if(hotel.owner == req.user._id) {
+            hotel.isOwner = true;
+            throw new Error('Cannot book your own hotel')
+        };
+        if (hotel.bookings.map(b => b.toString()).includes(req.user._id.toString())) {
+            hotel.isBooked = true;
+            throw new Error('Cannot book twice');
+        };
+    
+        await bookRoom(req.params.id, req.user._id);
+        res.redirect(`/${req.params.id}/details`);
+    } catch (err) {
+        res.render('details', {
+            title: 'Details Page',
+            hotel,
+            errors: parseError(err)
+        })
+    }
 });
 
 module.exports = hotelController;
