@@ -20,6 +20,7 @@ The course is intensive and aims to introduce learners to the development of ser
 - Request and Response Wrapper
 - Node.js Web Server
 
+
 ## <p id="node">Node.js Streams and Utilities</p>
 - Streams
 - Pub/Sub Patter
@@ -27,9 +28,11 @@ The course is intensive and aims to introduce learners to the development of ser
 - FS Module
 - Debugging
 
+
 ## <p id="express">ExpressJS and Templating</p>
 - Express
 - View Engine (handlebars) 
+
 
 ## <p id="mongodb">NoSQL and MongoDB</p>
 - Relational and Non-Relational
@@ -38,14 +41,17 @@ The course is intensive and aims to introduce learners to the development of ser
 - CRUD with Mongoose
 - Mongoose Querying
 
+
 ## <p id="session">Session and Authentication</p>
 - Cookies and Sessions
 - Authentication Concepts
 - JSON Web Token
 
+
 ## <p id="validation">Validation and Error Handling</p>
 - Validation (why and how, mongoose validation
 - Error handling
+
 
 ## <p id="restapi">Workshop: REST API</p>
 - What is REST and RESTful services?
